@@ -1,63 +1,71 @@
-import axios from 'axios';
-import React, { Component } from 'react';
+import axios from "axios";
+import React, { Component } from "react";
 
 export default class Product extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      products: [],
-      loading: true,
-      error: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            products: [],
+            loading: true,
+            error: false,
+        };
+        //this.getProducts=this.getProducts.bind(this)
     }
-    //this.getProducts=this.getProducts.bind(this)
-  }
-  getProducts() {
-    axios.get("https://backend-mukti.herokuapp.com/products")
-      .then(response => {
+    getProducts() {
+        axios
+            .get("https://backend-mukti.herokuapp.com/products")
+            .then((response) => {
+                this.setState({
+                    products: response.data,
+                    loading: false,
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                this.setState({
+                    loading: false,
+                    error: true,
+                });
+            });
+    }
 
-        this.setState({
-          products: response.data,
-          loading: false
-        })
-      })
-      .catch(error => {
-        console.log(error)
-        this.setState({
+    renderProduct() {
+        const itemsHtml = this.state.products.map((item) => (
+            <div className="product-wrapper" key={item.id}>
+                <h1>Name : {item.name}</h1>
+                <h2>SKU : {item.sku}</h2>
+                <h3>${item.price}</h3>
+                <img src={item.photo}></img>
+            </div>
+        ));
 
-          loading: false,
-          error: true
-        })
-      })
-  }
+        return itemsHtml;
+    }
 
-  renderProducts() {
-    const product_html = this.state.products.map(product => {
+    componentDidMount() {
+        this.getProducts();
+    }
+    render() {
+        if (this.state.loading || this.state.error) {
+            return (
 
-
-
-      <h1>{product.name}</h1>
-
-    })
-    return product_html;
-  }
-
-  componentDidMount() {
-    this.getProducts();
-  }
-  render() {
-
-
-    return (
-      <div className='product'>
-
-        {this.state.products.map(product => {
-          <div className="one-product">
-            <h1>{product.name}</h1>
-          </div>
-        })}
-      </div>
-    );
-  }
-
-
+                <div className="products-page-wrapper">
+                    <h2>WELCOME TO MY ECOMMERCE</h2>
+                    <h2>Products</h2>
+                    <div className="products-wrapper">
+                        <div className="loader"></div>
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <div className="products-page-wrapper">
+                     <h2>WELCOME TO MY ECOMMERCE</h2>
+                    <h2>Products</h2>
+                    <div className="products-wrapper">{this.renderProduct()}</div>
+                </div>
+            );
+        }
+    }
 }
+

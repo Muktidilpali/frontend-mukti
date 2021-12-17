@@ -3,14 +3,30 @@
 
 .navbar{
     height: 50px;
-    background-color: burlywood;
+    background-color: #33A8FF;
     display: flex;
     justify-content: space-around;
+
+    a {
+        margin: 10px;
+    }
+
+    a.active {
+        text-decoration: underline;
+    }
   }
   
   .navbar img {
-      display: flex;
-      justify-content: space-evenly;
-      height: 25px;
+     
+      height: 50px;
       width: 40px;
+
+
   }
+
+
+  .nav-wrapper {
+    margin-top: 22px;
+
+  
+}
