@@ -14,12 +14,24 @@ export default class AddItem extends Component {
         }
 
         this.handleChange = this.handleChange.bind(this)
+        this.handleChangePhoto = this.handleChangePhoto.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value })
     }
+
+    handleChangePhoto(event) {
+        //If the url input finish with jpg or png or jpeg set the url from input
+            if ( ['jpg','png','jpeg'].some(char => event.target.value.endsWith(char))) {
+             this.setState({ photoInput: event.target.value });
+        }else{
+            //Default image
+            this.setState({ [event.target.name]: 'https://cdn.pixabay.com/photo/2017/05/13/09/04/question-2309040__340.jpg' });
+        }
+      }
+    
 
     handleSubmit(event) {
         event.preventDefault()
@@ -68,6 +80,7 @@ export default class AddItem extends Component {
                         name="nameInput" 
                         value={this.state.nameInput}
                         onChange={this.handleChange}
+                        required
                     />
                       <input 
                         type="text" 
@@ -75,21 +88,23 @@ export default class AddItem extends Component {
                         name="skuInput" 
                         value={this.state.skuInput}
                         onChange={this.handleChange}
+                        required
                     />
                       <input 
-                        type="text" 
+                        type="url" 
                         placeholder="URL photo"
                         name="photoInput" 
-                        value={this.state.photoInput}
-                        onChange={this.handleChange}
+                        onChange={this.handleChangePhoto}
+                        required
                     />
 
                     <input 
-                        type="text" 
+                        type="number" 
                         placeholder="price"
                         name="priceInput" 
                         value={this.state.priceInput}
                         onChange={this.handleChange}
+                        required
                     />
 
                     <button type="submit" disabled={this.state.loading}>Add Product</button>
