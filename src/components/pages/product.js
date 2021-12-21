@@ -19,6 +19,7 @@ export default class Product extends Component {
                     products: response.data,
                     loading: false,
                 });
+                console.log(this.state.products)
             })
             .catch((error) => {
                 console.log(error);
@@ -30,12 +31,14 @@ export default class Product extends Component {
     }
 
     renderProduct() {
+
         const itemsHtml = this.state.products.map((item) => (
             <div className="product-wrapper" key={item.id}>
                 <h1>Name : {item.name}</h1>
                 <h2>SKU : {item.sku}</h2>
                 <h3>${item.price}</h3>
-                <img src={item.photo}></img>
+                { <img src={item.photo}></img> }
+                {console.log(item.photo)}
             </div>
         ));
 

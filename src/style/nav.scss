@@ -1,6 +1,4 @@
 
-
-
 .navbar{
     height: 50px;
     background-color: #33A8FF;
@@ -8,11 +6,17 @@
     justify-content: space-around;
 
     a {
+        color:black;
         margin: 10px;
+        text-decoration: none;
     }
+a:hover {
+    color:tomato;
+    transition: 0.9s;
 
+}
     a.active {
-        text-decoration: underline;
+        text-decoration: none;
     }
   }
   
